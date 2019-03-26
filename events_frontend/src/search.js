@@ -41,7 +41,7 @@ function createEventCard(event) {
     let li = document.createElement('li')
     let h2 = document.createElement('h2')
     let likeButton = document.createElement('button')
-    likeButton.textContent = '<3'
+    likeButton.textContent = 'Add to Favorites ❤️'
     likeButton.addEventListener('click', () => {
       saveNewFavorite(event)
     })
@@ -54,6 +54,8 @@ function createEventCard(event) {
     date.textContent = event.dates.start.localDate
     let img = document.createElement('img')
     img.src = event.images[0].url
+    img.style.width = '200px'
+    img.style.height = '125px'
     li.appendChild(h2)
     li.appendChild(cityState)
     li.appendChild(venue)
@@ -65,7 +67,6 @@ function createEventCard(event) {
 }
 
 function saveNewFavorite(event) {
-  debugger
   let data = {
     'name': event.name,
     'url': event.url,
@@ -75,12 +76,11 @@ function saveNewFavorite(event) {
     'start_time': event.dates.start.localTime,
     'segment': event.classifications[0].segment.name,
     'genre': event.classifications[0].genre.name,
-    // may have to omit price_min/max or change schema/params
     'venue': event._embedded.venues[0].name,
     'city': event._embedded.venues[0].city.name,
     'state': event._embedded.venues[0].state.stateCode
-
   }
+  
   fetch(endPoint, {
     method: 'POST',
     headers: {'Content-Type': 'application/json', Accept: 'application/json'},
