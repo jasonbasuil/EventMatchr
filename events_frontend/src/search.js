@@ -1,8 +1,8 @@
-const TICKET = 'https://app.ticketmaster.com/discovery/v2/events?apikey='
+const BASEURL = 'https://app.ticketmaster.com/discovery/v2/events?apikey='
 document.addEventListener('DOMContentLoaded', getSearchData())
 
 function getSearchData() {
-  fetch(TICKET)
+  fetch(BASEURL + APIKEY)
   .then(response => response.json())
   .then(json => {
     json._embedded.events.forEach((event => {
