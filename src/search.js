@@ -1,4 +1,4 @@
-const TICKET = 'https://app.ticketmaster.com/discovery/v2/events?apikey=M53XHNTJAphx1pxc6MAlTskGgcoXqgXy&city=Seattle&countryCode=US'
+const TICKET = 'https://app.ticketmaster.com/discovery/v2/events?apikey='
 document.addEventListener('DOMContentLoaded', getSearchData())
 
 function getSearchData() {
