@@ -1,5 +1,6 @@
 const BASEURL = 'https://app.ticketmaster.com/discovery/v2/events?apikey='
 const APIKEY = 'tSqmpxsVdaylI75DcdQTKHYNGTGddSG1'
+const endPoint = 'http://localhost:3000/api/v1/events';
 document.addEventListener('DOMContentLoaded', () => {
   getUserInput()
 })
@@ -61,6 +62,30 @@ function createEventCard(event) {
     li.appendChild(likeButton)
     ul.appendChild(li)
     div.appendChild(ul)
+}
+
+function saveNewFavorite(event) {
+  debugger
+  let data = {
+    'name': event.name,
+    'url': event.url,
+    'image1': event.images[0].url,
+    'image2': event.images[1].url,
+    'start_date': event.dates.start.localDate,
+    'start_time': event.dates.start.localTime,
+    'segment': event.classifications[0].segment.name,
+    'genre': event.classifications[0].genre.name,
+    // may have to omit price_min/max or change schema/params
+    'venue': event._embedded.venues[0].name,
+    'city': event._embedded.venues[0].city.name,
+    'state': event._embedded.venues[0].state.stateCode
+
+  }
+  fetch(endPoint, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+    body: JSON.stringify(data)
+  })
 }
 
 
