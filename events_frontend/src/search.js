@@ -1,8 +1,30 @@
 const BASEURL = 'https://app.ticketmaster.com/discovery/v2/events?apikey='
-document.addEventListener('DOMContentLoaded', getSearchData())
+const APIKEY = 'tSqmpxsVdaylI75DcdQTKHYNGTGddSG1'
+document.addEventListener('DOMContentLoaded', () => {
+  getUserInput()
+})
 
-function getSearchData() {
-  fetch(BASEURL + APIKEY)
+function getUserInput() {
+  let form = document.getElementById('searchForm')
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault()
+    let keyword = document.getElementById('keyword').value
+    let city = document.getElementById('city').value
+    let state = document.getElementById('state').value
+    // console.log(keyword)
+    // console.log(city)
+    // console.log(state)
+    getSearchData(keyword, city, state)
+  })
+}
+
+function getSearchData(keyword, city, state) {
+  // need to update keyword for mulitple words
+  let keywordSearch = `&keyword=${keyword}`
+  let citySearch = `&city=${city}`
+  let stateSearch =`&stateCode=${state}`
+  console.log(BASEURL + APIKEY + keywordSearch + citySearch + stateSearch)
+  fetch(BASEURL + APIKEY + keywordSearch + citySearch + stateSearch)
   .then(response => response.json())
   .then(json => {
     json._embedded.events.forEach((event => {
@@ -12,26 +34,36 @@ function getSearchData() {
 }
 
 function createEventCard(event) {
-  let form = document.getElementById('searchForm')
-  form.addEventListener('submit', (ev) => {
-    ev.preventDefault()
-    // console.log('hey')
+  // debugger
     let div = document.getElementById('container')
     let ul = document.getElementById('ul')
     let li = document.createElement('li')
     let h2 = document.createElement('h2')
+    let likeButton = document.createElement('button')
+    likeButton.textContent = '<3'
+    likeButton.addEventListener('click', () => {
+      saveNewFavorite(event)
+    })
     h2.textContent = event.name
-    let p = document.createElement('p')
-    p.textContent = "City Name"
+    let cityState = document.createElement('p')
+    let date = document.createElement('p')
+    let venue = document.createElement('p')
+    cityState.textContent = `${event._embedded.venues[0].city.name}, ${event._embedded.venues[0].state.stateCode}`
+    venue.textContent = event._embedded.venues[0].name
+    date.textContent = event.dates.start.localDate
     let img = document.createElement('img')
     img.src = event.images[0].url
     li.appendChild(h2)
-    li.appendChild(p)
+    li.appendChild(cityState)
+    li.appendChild(venue)
+    li.appendChild(date)
     li.appendChild(img)
+    li.appendChild(likeButton)
     ul.appendChild(li)
     div.appendChild(ul)
-  })
 }
+
+
 
 // <div>
 // <form id="searchForm" action="index.html" method="post">
