@@ -66,23 +66,31 @@ function getSearchData(keyword, city, state) {
 }
 
 function createEventCard(event) {
-  // debugger
     let div = document.getElementById('searchResults')
     let ul = document.getElementById('ul')
+
     let li = document.createElement('li')
+    // while (ul.childNodes) {
+    //   ul.removeChild(li)
+    // }
     let h2 = document.createElement('h2')
+    h2.textContent = event.name
+    h2.addEventListener('click', () => {
+      showMore(event)
+      toggleVisibility("searchResults")
+    })
     let likeButton = document.createElement('button')
     likeButton.textContent = 'Add to Favorites ❤️'
     likeButton.addEventListener('click', () => {
       saveNewFavorite(event)
     })
-    h2.textContent = event.name
+
     let cityState = document.createElement('p')
     let date = document.createElement('p')
     let venue = document.createElement('p')
-    cityState.textContent = `${event._embedded.venues[0].city.name}, ${event._embedded.venues[0].state.stateCode}`
-    venue.textContent = event._embedded.venues[0].name
-    date.textContent = event.dates.start.localDate
+    cityState.textContent = `Location: ${event._embedded.venues[0].city.name}, ${event._embedded.venues[0].state.stateCode}`
+    venue.textContent = `Venue: ${event._embedded.venues[0].name}`
+    date.textContent = `Event Date: ${event.dates.start.localDate}`
     let img = document.createElement('img')
     img.src = event.images[0].url
     img.style.width = '200px'
@@ -95,6 +103,53 @@ function createEventCard(event) {
     li.appendChild(likeButton)
     ul.appendChild(li)
     div.appendChild(ul)
+}
+
+function showMore(event) {
+  let div = document.getElementById('showResults')
+  let ul = document.getElementById('showUl')
+  let h2 = document.createElement('h2')
+  let li = document.createElement('li')
+  h2.textContent = event.name
+  let cityState = document.createElement('p')
+  let date = document.createElement('p')
+  let venue = document.createElement('p')
+  let url = document.createElement('p')
+  let start_date = document.createElement('p')
+  let start_time = document.createElement('p')
+  let segment = document.createElement('p')
+  let genre = document.createElement('p')
+  url.textContent = `Buy Tickets: ${event.url}`
+  start_date.textContent = `Date of Event: ${event.dates.start.localDate}`
+  start_time.textContent = `Time of Event: ${event.dates.start.localTime}`
+  segment.textContent = `Type of Event: ${event.classifications[0].segment.name}`
+  genre.textContent = `Genre: ${event.classifications[0].genre.name}`,
+  cityState.textContent = `Location: ${event._embedded.venues[0].city.name}, ${event._embedded.venues[0].state.stateCode}`
+  venue.textContent = `Venue: ${event._embedded.venues[0].name}`
+  date.textContent = event.dates.start.localDate
+  let img = document.createElement('img')
+  img.src = event.images[0].url
+  img.style.width = '200px'
+  img.style.height = '125px'
+  let likeButton = document.createElement('button')
+  likeButton.textContent = 'Add to Favorites ❤️'
+  likeButton.addEventListener('click', () => {
+    saveNewFavorite(event)
+  })
+  li.appendChild(h2)
+  li.appendChild(cityState)
+  li.appendChild(venue)
+  // li.appendChild(date)
+  li.appendChild(img)
+  li.appendChild(url)
+  li.appendChild(start_date)
+  li.appendChild(start_time)
+  li.appendChild(segment)
+  li.appendChild(genre)
+  li.appendChild(likeButton)
+  ul.appendChild(li)
+  div.appendChild(ul)
+
 }
 
 function saveNewFavorite(event) {
