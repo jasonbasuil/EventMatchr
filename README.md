@@ -1,4 +1,4 @@
-# Mod3_FInal_Project_Front_End
+# Mod3_Final_Project_Front_End
 Front end of Event Matcher
 
 Event Matcher is a web application that allows users to search for different events nearby and make purchases through Ticketmaster.
