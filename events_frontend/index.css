@@ -5,3 +5,16 @@
 #login {
   display: block;
 }
+
+/* body {
+ background-image: url("https://png.pngtree.com/thumb_back/fw800/back_pic/03/73/20/0557b9c92034b39.jpg");
+ background-color: #cccccc;
+} */
+
+html {
+  background: url(https://qello.com/welcome/images/Background_1600.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

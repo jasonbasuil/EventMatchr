@@ -13,12 +13,17 @@ function getLoginInfo() {
     ev.preventDefault()
     let username = document.getElementById('username').value
     let email = document.getElementById('email').value
-    console.log(username)
-    console.log(email)
+    // let currentUser = localStorage.setItem('username': username)
     let data = {
       'username': username,
-      'email': email,
+      'email': email
     }
+    postUser(data)
+
+  })
+}
+
+function postUser(data) {
     fetch(userEndPoint, {
       method: 'POST',
       headers: {
@@ -33,8 +38,7 @@ function getLoginInfo() {
     let loginDiv = document.getElementById('login')
     let form = document.getElementById('loginForm')
     form.style.display = "none"
-  })
-}
+  }
 
 function getUserInput() {
   let form = document.getElementById('searchForm')
@@ -59,23 +63,37 @@ function getSearchData(keyword, city, state) {
   fetch(BASEURL + APIKEY + keywordSearch + citySearch + stateSearch)
   .then(response => response.json())
   .then(json => {
+    clearData()
     json._embedded.events.forEach((event => {
       createEventCard(event)
     }))
   })
 }
 
+function clearData() {
+  let ul = document.getElementById('ul')
+  while (ul.hasChildNodes()) {
+    ul.removeChild(ul.firstChild)
+  }
+}
+
 function createEventCard(event) {
     let div = document.getElementById('searchResults')
+    div.style.display = 'block'
     let ul = document.getElementById('ul')
-
     let li = document.createElement('li')
-    // while (ul.childNodes) {
-    //   ul.removeChild(li)
-    // }
+
+
     let h2 = document.createElement('h2')
     h2.textContent = event.name
     h2.addEventListener('click', () => {
+      showMore(event)
+      toggleVisibility("searchResults")
+    })
+    let moreInfo = document.createElement('button')
+    moreInfo.textContent = "Click Here for More Info"
+    moreInfo.addEventListener('click', () => {
+      console.log('fire')
       showMore(event)
       toggleVisibility("searchResults")
     })
@@ -96,10 +114,11 @@ function createEventCard(event) {
     img.style.width = '200px'
     img.style.height = '125px'
     li.appendChild(h2)
+    li.appendChild(img)
     li.appendChild(cityState)
     li.appendChild(venue)
     li.appendChild(date)
-    li.appendChild(img)
+    li.appendChild(moreInfo)
     li.appendChild(likeButton)
     ul.appendChild(li)
     div.appendChild(ul)
@@ -114,12 +133,13 @@ function showMore(event) {
   let cityState = document.createElement('p')
   let date = document.createElement('p')
   let venue = document.createElement('p')
-  let url = document.createElement('p')
+  let url = document.createElement('a')
   let start_date = document.createElement('p')
   let start_time = document.createElement('p')
   let segment = document.createElement('p')
   let genre = document.createElement('p')
-  url.textContent = `Buy Tickets: ${event.url}`
+  url.href = event.url
+  url.textContent = `Click Here to Buy Tickets`
   start_date.textContent = `Date of Event: ${event.dates.start.localDate}`
   start_time.textContent = `Time of Event: ${event.dates.start.localTime}`
   segment.textContent = `Type of Event: ${event.classifications[0].segment.name}`
@@ -131,22 +151,31 @@ function showMore(event) {
   img.src = event.images[0].url
   img.style.width = '200px'
   img.style.height = '125px'
+  let backButton = document.createElement('button')
+  backButton.textContent = "Go Back"
+  backButton.addEventListener('click', () => {
+    toggleVisibility('searchResults')
+    while (ul.hasChildNodes()) {
+      ul.removeChild(ul.firstChild)
+    }
+  })
   let likeButton = document.createElement('button')
   likeButton.textContent = 'Add to Favorites ❤️'
   likeButton.addEventListener('click', () => {
     saveNewFavorite(event)
   })
   li.appendChild(h2)
+  li.appendChild(url)
   li.appendChild(cityState)
   li.appendChild(venue)
   // li.appendChild(date)
   li.appendChild(img)
-  li.appendChild(url)
   li.appendChild(start_date)
   li.appendChild(start_time)
   li.appendChild(segment)
   li.appendChild(genre)
   li.appendChild(likeButton)
+  li.appendChild(backButton)
   ul.appendChild(li)
   div.appendChild(ul)
 
@@ -181,4 +210,9 @@ function toggleVisibility(id) {
   } else {
     e.style.display = "block"
   }
+  console.log(e.style.display)
+}
+
+function clearCurrent(ul) {
+  ul.removeChild(ul.firstChild)
 }
