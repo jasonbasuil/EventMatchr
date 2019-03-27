@@ -128,6 +128,10 @@ function createEventCard(event) {
 }
 
 function showMore(event) {
+
+  toggleVisibility('search')
+
+
   let div = document.getElementById('showResults')
   let ul = document.getElementById('showUl')
   let h2 = document.createElement('h2')
@@ -157,6 +161,7 @@ function showMore(event) {
   let backButton = document.createElement('button')
   backButton.textContent = "Go Back"
   backButton.addEventListener('click', () => {
+    toggleVisibility('search')
     toggleVisibility('searchResults')
     while (ul.hasChildNodes()) {
       ul.removeChild(ul.firstChild)
