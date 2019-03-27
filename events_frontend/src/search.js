@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   getUserInput()
 })
 
+
+
 function getUserInput() {
   let form = document.getElementById('searchForm')
   form.addEventListener('submit', (ev) => {
@@ -80,7 +82,7 @@ function saveNewFavorite(event) {
     'city': event._embedded.venues[0].city.name,
     'state': event._embedded.venues[0].state.stateCode
   }
-  
+
   fetch(endPoint, {
     method: 'POST',
     headers: {'Content-Type': 'application/json', Accept: 'application/json'},
