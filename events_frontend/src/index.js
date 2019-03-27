@@ -2,6 +2,7 @@ const userEndPoint = 'http://localhost:3000/api/v1/users';
 const BASEURL = 'https://app.ticketmaster.com/discovery/v2/events?apikey='
 const APIKEY = 'tSqmpxsVdaylI75DcdQTKHYNGTGddSG1'
 const endPoint = 'http://localhost:3000/api/v1/events';
+
 document.addEventListener('DOMContentLoaded', () => {
   getLoginInfo()
 })
@@ -19,9 +20,23 @@ function getLoginInfo() {
       'email': email
     }
     postUser(data)
-
+    getUserId(username)
   })
 }
+
+function getUserId(username) {
+  fetch(userEndPoint)
+  .then(res => res.json())
+  .then(json => {
+    json.forEach((person => {
+      if (person.username == username){
+        localStorage.setItem('userId', person.id)
+      }
+    }))
+  })
+}
+
+
 
 function postUser(data) {
     fetch(userEndPoint, {
@@ -191,6 +206,7 @@ function showMore(event) {
 
 function saveNewFavorite(event) {
   let data = {
+    'user_id': localStorage.getItem('userId'),
     'name': event.name,
     'url': event.url,
     'image1': event.images[0].url,
