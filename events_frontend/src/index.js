@@ -59,7 +59,7 @@ function getSearchData(keyword, city, state) {
   let keywordSearch = `&keyword=${keyword}`
   let citySearch = `&city=${city}`
   let stateSearch =`&stateCode=${state}`
-  console.log(BASEURL + APIKEY + keywordSearch + citySearch + stateSearch)
+  console.log(BASEURL + APIKEY + citySearch + keywordSearch + stateSearch)
   fetch(BASEURL + APIKEY + keywordSearch + citySearch + stateSearch)
   .then(response => response.json())
   .then(json => {
@@ -67,6 +67,9 @@ function getSearchData(keyword, city, state) {
     json._embedded.events.forEach((event => {
       createEventCard(event)
     }))
+  })
+  .catch(function(error) {
+    alert("There were no results for your search query. Please try again.")
   })
 }
 
