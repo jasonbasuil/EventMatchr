@@ -113,7 +113,7 @@ function createEventCard(event) {
     let moreInfo = document.createElement('button')
     moreInfo.textContent = "Click Here for More Info"
     moreInfo.addEventListener('click', () => {
-      console.log('fire')
+      // console.log('fire')
       showMore(event)
       toggleVisibility("searchResults")
     })
@@ -157,14 +157,41 @@ function showMore(event) {
   let date = document.createElement('p')
   let venue = document.createElement('p')
   let url = document.createElement('a')
+  // let url = document.getElementById('url')
   let start_date = document.createElement('p')
   let start_time = document.createElement('p')
   let segment = document.createElement('p')
   let genre = document.createElement('p')
+  url.setAttribute('target', '_blank')
   url.href = event.url
   url.textContent = `Click Here to Buy Tickets`
+
+  var time = event.dates.start.localTime; // your input
+
+time = time.split(':'); // convert to array
+
+// fetch
+var hours = Number(time[0]);
+var minutes = Number(time[1]);
+var seconds = Number(time[2]);
+
+// calculate
+var timeValue;
+
+if (hours > 0 && hours <= 12) {
+  timeValue= "" + hours;
+} else if (hours > 12) {
+  timeValue= "" + (hours - 12);
+} else if (hours == 0) {
+  timeValue= "12";
+}
+
+timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+
+timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+
   start_date.textContent = `Date of Event: ${event.dates.start.localDate}`
-  start_time.textContent = `Time of Event: ${event.dates.start.localTime}`
+  start_time.textContent = `Time of Event: ${timeValue}`
   segment.textContent = `Type of Event: ${event.classifications[0].segment.name}`
   genre.textContent = `Genre: ${event.classifications[0].genre.name}`,
   cityState.textContent = `Location: ${event._embedded.venues[0].city.name}, ${event._embedded.venues[0].state.stateCode}`
