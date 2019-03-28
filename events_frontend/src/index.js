@@ -249,7 +249,7 @@ function getFavorites() {
 
 function showFavorites(event) {
   console.log('in show favorites')
-
+  debugger
   let div = document.getElementById('showFavorites')
   let showFavoritesUl = document.getElementById('showFavoritesUl')
   div.style.display = 'block'
@@ -326,7 +326,3 @@ function toggleVisibility(id) {
     e.style.display = "block"
   }
 }
-
-// function clearCurrent(ul) {
-//   ul.removeChild(ul.firstChild)
-// }
