@@ -14,7 +14,7 @@ function getLoginInfo() {
     ev.preventDefault()
     let username = document.getElementById('username').value
     let email = document.getElementById('email').value
-    // let currentUser = localStorage.setItem('username': username)
+
     let data = {
       'username': username,
       'email': email
@@ -35,8 +35,6 @@ function getUserId(username) {
     }))
   })
 }
-
-
 
 function postUser(data) {
     fetch(userEndPoint, {
@@ -62,10 +60,14 @@ function getUserInput() {
     let keyword = document.getElementById('keyword').value
     let city = document.getElementById('city').value
     let state = document.getElementById('state').value
-    // console.log(keyword)
-    // console.log(city)
-    // console.log(state)
+
     getSearchData(keyword, city, state)
+  })
+  let viewFavoritesButton = document.getElementById('favoritesButton')
+  viewFavoritesButton.addEventListener('click', () => {
+    console.log('in favorite')
+    getFavorites()
+    // showFavorites()
   })
 }
 
@@ -78,7 +80,8 @@ function getSearchData(keyword, city, state) {
   fetch(BASEURL + APIKEY + keywordSearch + citySearch + stateSearch)
   .then(response => response.json())
   .then(json => {
-    clearData()
+    clearData('ul')
+    clearData('showFavoritesUl')
     json._embedded.events.forEach((event => {
       createEventCard(event)
     }))
@@ -88,8 +91,8 @@ function getSearchData(keyword, city, state) {
   })
 }
 
-function clearData() {
-  let ul = document.getElementById('ul')
+function clearData(id) {
+  let ul = document.getElementById(id)
   while (ul.hasChildNodes()) {
     ul.removeChild(ul.firstChild)
   }
@@ -100,7 +103,6 @@ function createEventCard(event) {
     div.style.display = 'block'
     let ul = document.getElementById('ul')
     let li = document.createElement('li')
-
 
     let h2 = document.createElement('h2')
     h2.textContent = event.name
@@ -145,7 +147,6 @@ function createEventCard(event) {
 function showMore(event) {
 
   toggleVisibility('search')
-
 
   let div = document.getElementById('showResults')
   let ul = document.getElementById('showUl')
@@ -231,6 +232,69 @@ timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
 
 }
 
+function getFavorites() {
+  console.log('in get favorites')
+  fetch(endPoint)
+  .then(res => res.json())
+  .then(json => {
+    clearData('showFavoritesUl')
+    json.forEach((event => {
+      clearData('ul')
+      if (localStorage.userId == event.user_id) {
+        showFavorites(event)
+      }
+    }))
+  })
+}
+
+function showFavorites(event) {
+  console.log('in show favorites')
+
+  let div = document.getElementById('showFavorites')
+  let showFavoritesUl = document.getElementById('showFavoritesUl')
+  div.style.display = 'block'
+
+  let li = document.createElement('li')
+  let h2 = document.createElement('h2')
+  h2.textContent = event.name
+  // h2.addEventListener('click', () => {
+  //   showMore(event)
+  //   toggleVisibility("showFavorites")
+  // })
+  // let moreInfo = document.createElement('button')
+  // moreInfo.textContent = "Click Here for More Info"
+  // moreInfo.addEventListener('click', () => {
+  //   showMore(event)
+  //   toggleVisibility("showFavorites")
+  // })
+
+  // let likeButton = document.createElement('button')
+  // likeButton.textContent = 'Add to Favorites ❤️'
+  // likeButton.addEventListener('click', () => {
+  //   saveNewFavorite(event)
+  // })
+
+  let cityState = document.createElement('p')
+  let date = document.createElement('p')
+  let venue = document.createElement('p')
+  cityState.textContent = `Location: ${event.city}, ${event.state}`
+  venue.textContent = `Venue: ${event.venue}`
+  date.textContent = `Event Date: ${event.start_date}`
+  let img = document.createElement('img')
+  img.src = event.image1
+  img.style.width = '200px'
+  img.style.height = '125px'
+  li.appendChild(h2)
+  li.appendChild(img)
+  li.appendChild(cityState)
+  li.appendChild(venue)
+  li.appendChild(date)
+  // li.appendChild(moreInfo)
+  // li.appendChild(likeButton)
+  showFavoritesUl.appendChild(li)
+  div.appendChild(showFavoritesUl)
+}
+
 function saveNewFavorite(event) {
   let data = {
     'user_id': localStorage.getItem('userId'),
@@ -261,9 +325,8 @@ function toggleVisibility(id) {
   } else {
     e.style.display = "block"
   }
-  console.log(e.style.display)
 }
 
-function clearCurrent(ul) {
-  ul.removeChild(ul.firstChild)
-}
+// function clearCurrent(ul) {
+//   ul.removeChild(ul.firstChild)
+// }
