@@ -270,13 +270,11 @@ function showFavorites(event) {
     // toggleVisibility("showFavorites") //is this right?
   })
 
-  //this here could be remove from favorite
-
-  // let likeButton = document.createElement('button')
-  // likeButton.textContent = 'Add to Favorites ❤️'
-  // likeButton.addEventListener('click', () => {
-  //   saveNewFavorite(event)
-  // })
+  let removeButton = document.createElement('button')
+  removeButton.textContent = 'Remove Event' //remove from favorites
+  removeButton.addEventListener('click', () => {
+    removeFavorite(event)
+  })
 
   let cityState = document.createElement('p')
   let date = document.createElement('p')
@@ -293,8 +291,8 @@ function showFavorites(event) {
   li.appendChild(cityState)
   li.appendChild(venue)
   li.appendChild(date)
+  li.appendChild(removeButton)
   li.appendChild(moreInfo)
-  // li.appendChild(likeButton)
   showFavoritesUl.appendChild(li)
   div.appendChild(showFavoritesUl)
 }
@@ -369,9 +367,9 @@ timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
 
 
 
-  let likeButton = document.createElement('button')
-  likeButton.textContent = 'Remove Event' //remove from favorites
-  likeButton.addEventListener('click', () => {
+  let removeButton = document.createElement('button')
+  removeButton.textContent = 'Remove Event' //remove from favorites
+  removeButton.addEventListener('click', () => {
     removeFavorite(event)
   })
   li.appendChild(h2)
@@ -384,7 +382,7 @@ timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
   li.appendChild(start_time)
   li.appendChild(segment)
   li.appendChild(genre)
-  li.appendChild(likeButton)
+  li.appendChild(removeButton)
   li.appendChild(backButton)
   ul.appendChild(li)
   div.appendChild(ul)
@@ -416,6 +414,26 @@ function saveNewFavorite(event) {
 
 function removeFavorite(event) {
   console.log('in removeFavorite')
+  let data = {
+    'user_id': localStorage.getItem('userId'),
+    'name': event.name,
+    'url': event.url,
+    'image1': event.image1,
+    'image2': event.image2,
+    'start_date': event.start_date,
+    'start_time': event.start_time,
+    'segment': event.segment,
+    'genre': event.genre,
+    'venue': event.venue,
+    'city': event.city,
+    'state': event.state
+  }
+
+  fetch(endPoint + `/${event.id}`, {
+    method: 'DELETE',
+    headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+    body: JSON.stringify(data)
+  })
 }
 
 function toggleVisibility(id) {
