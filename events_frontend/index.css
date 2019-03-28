@@ -1,9 +1,11 @@
 #search {
   display: none;
+  text-align: center;
 }
 
 #login {
   display: block;
+  text-align: center;
 }
 
 ul {
