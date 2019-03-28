@@ -104,13 +104,9 @@ function createEventCard(event) {
     div.style.display = 'block'
     let ul = document.getElementById('ul')
     let li = document.createElement('li')
-
+    li.className = 'card'
     let h2 = document.createElement('h2')
     h2.textContent = event.name
-    h2.addEventListener('click', () => {
-      showMore(event)
-      toggleVisibility("searchResults")
-    })
     let moreInfo = document.createElement('button')
     moreInfo.textContent = "Click Here for More Info"
     moreInfo.addEventListener('click', () => {
@@ -122,7 +118,6 @@ function createEventCard(event) {
     likeButton.addEventListener('click', () => {
       saveNewFavorite(event)
     })
-
     let cityState = document.createElement('p')
     let date = document.createElement('p')
     let venue = document.createElement('p')
@@ -130,6 +125,7 @@ function createEventCard(event) {
     venue.textContent = `Venue: ${event._embedded.venues[0].name}`
     date.textContent = `Event Date: ${event.dates.start.localDate}`
     let img = document.createElement('img')
+    img.className = 'cardImage'
     img.src = event.images[0].url
     img.style.width = '200px'
     img.style.height = '125px'
