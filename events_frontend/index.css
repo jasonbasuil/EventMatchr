@@ -6,12 +6,21 @@
   display: block;
 }
 
+ul {
+  list-style-type: none;
+}
+
+li {
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .eventCard {
   text-align: center;
   border: grey solid 3px;
   padding: 1rem;
-  width: 20rem;
-  height: 30rem;
+  width: 22rem;
+  height: 37rem;
   display: inline-grid;
   margin: 1rem 2rem;
   box-shadow: 3px 4px #e04b52
@@ -22,7 +31,7 @@
   border: grey solid 5px;
   padding: 2rem;
   width: 28rem;
-  height: 35rem;
+  height: 39rem;
   display: inline-grid;
   margin: 1rem 2rem;
   box-shadow: 3px 4px black

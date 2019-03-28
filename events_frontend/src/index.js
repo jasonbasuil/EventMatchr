@@ -112,10 +112,12 @@ function createEventCard(event) {
     moreInfo.addEventListener('click', () => {
       showMore(event)
       toggleVisibility("searchResults")
+      clearData('eventCard')
     })
     let likeButton = document.createElement('button')
     likeButton.textContent = 'Add to Favorites ❤️'
     likeButton.addEventListener('click', () => {
+      alert("Successfully Added to Favorites")
       saveNewFavorite(event)
     })
     let cityState = document.createElement('p')
@@ -302,7 +304,7 @@ function showMoreFromFavorites(event) {
 
   let div = document.getElementById('showMoreFromFavoritesResults')
   let ul = document.getElementById('showMoreFromFavoritesUl')
-  ul.className = "favoritesCard"
+  ul.className = "showMoreCard"
   let h2 = document.createElement('h2')
   let li = document.createElement('li')
   h2.textContent = event.name
@@ -360,6 +362,7 @@ timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
   backButton.addEventListener('click', () => {
     // toggleVisibility('search')
     toggleVisibility('showFavorites')
+    toggleVisibility('showMoreCard')
     while (ul.hasChildNodes()) {
       ul.removeChild(ul.firstChild)
     }
