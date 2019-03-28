@@ -104,7 +104,7 @@ function createEventCard(event) {
     div.style.display = 'block'
     let ul = document.getElementById('ul')
     let li = document.createElement('li')
-    li.className = 'card'
+    li.className = 'eventCard'
     let h2 = document.createElement('h2')
     h2.textContent = event.name
     let moreInfo = document.createElement('button')
@@ -148,6 +148,7 @@ function showMore(event) {
   let ul = document.getElementById('showUl')
   let h2 = document.createElement('h2')
   let li = document.createElement('li')
+  ul.className = 'showMoreCard'
   h2.textContent = event.name
   let cityState = document.createElement('p')
   let date = document.createElement('p')
@@ -251,8 +252,8 @@ function showFavorites(event) {
   let div = document.getElementById('showFavorites')
   let showFavoritesUl = document.getElementById('showFavoritesUl')
   div.style.display = 'block'
-
   let li = document.createElement('li')
+  li.className = 'favoritesCard'
   let h2 = document.createElement('h2')
   h2.textContent = event.name
   h2.addEventListener('click', () => {
@@ -280,6 +281,7 @@ function showFavorites(event) {
   date.textContent = `Event Date: ${event.start_date}`
   let img = document.createElement('img')
   img.src = event.image1
+  img.className = 'cardImage'
   img.style.width = '200px'
   img.style.height = '125px'
   li.appendChild(h2)
@@ -300,6 +302,7 @@ function showMoreFromFavorites(event) {
 
   let div = document.getElementById('showMoreFromFavoritesResults')
   let ul = document.getElementById('showMoreFromFavoritesUl')
+  ul.className = "favoritesCard"
   let h2 = document.createElement('h2')
   let li = document.createElement('li')
   h2.textContent = event.name
@@ -349,6 +352,7 @@ timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
   date.textContent = event.start_date
   let img = document.createElement('img')
   img.src = event.image1
+  img.className = 'cardImage'
   img.style.width = '200px'
   img.style.height = '125px'
   let backButton = document.createElement('button')
