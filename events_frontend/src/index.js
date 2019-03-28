@@ -22,6 +22,11 @@ function getLoginInfo() {
     postUser(data)
     getUserId(username)
   })
+  let homeButton = document.getElementById('eventMatcher')
+  homeButton.addEventListener('click', () => {
+    console.log('homeButton')
+    toggleAllOffExceptSearch()
+  })
 }
 
 function getUserId(username) {
@@ -438,5 +443,22 @@ function toggleVisibility(id) {
     e.style.display = 'none'
   } else {
     e.style.display = "block"
+  }
+}
+
+function toggleAllOffExceptSearch() {
+  let div1 = document.getElementById('searchResults')
+  let div2 = document.getElementById('showResults')
+  let div3 = document.getElementById('showFavorites')
+  let div4 = document.getElementById('showMoreFromFavorites')
+
+  if (div1.style.display == 'block') {
+    toggleVisibility('searchResults')
+  } else if (div2.style.display == 'block') {
+    toggleVisibility('showResults')
+  } else if (div3.style.display == 'block') {
+    toggleVisibility('showFavorites')
+  } else if (div4.style.display == 'block') {
+    toggleVisibility('showMoreFromFavorites')
   }
 }
