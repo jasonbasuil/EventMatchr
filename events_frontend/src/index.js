@@ -82,6 +82,7 @@ function getSearchData(keyword, city, state) {
   .then(json => {
     clearData('ul')
     clearData('showFavoritesUl')
+    clearData('showMoreFromFavoritesUl')
     json._embedded.events.forEach((event => {
       createEventCard(event)
     }))
@@ -103,17 +104,12 @@ function createEventCard(event) {
     div.style.display = 'block'
     let ul = document.getElementById('ul')
     let li = document.createElement('li')
-
+    li.className = 'card'
     let h2 = document.createElement('h2')
     h2.textContent = event.name
-    h2.addEventListener('click', () => {
-      showMore(event)
-      toggleVisibility("searchResults")
-    })
     let moreInfo = document.createElement('button')
     moreInfo.textContent = "Click Here for More Info"
     moreInfo.addEventListener('click', () => {
-      // console.log('fire')
       showMore(event)
       toggleVisibility("searchResults")
     })
@@ -122,7 +118,6 @@ function createEventCard(event) {
     likeButton.addEventListener('click', () => {
       saveNewFavorite(event)
     })
-
     let cityState = document.createElement('p')
     let date = document.createElement('p')
     let venue = document.createElement('p')
@@ -130,6 +125,7 @@ function createEventCard(event) {
     venue.textContent = `Venue: ${event._embedded.venues[0].name}`
     date.textContent = `Event Date: ${event.dates.start.localDate}`
     let img = document.createElement('img')
+    img.className = 'cardImage'
     img.src = event.images[0].url
     img.style.width = '200px'
     img.style.height = '125px'
@@ -250,6 +246,8 @@ function getFavorites() {
 function showFavorites(event) {
   console.log('in show favorites')
 
+  clearData('showMoreFromFavoritesUl')
+
   let div = document.getElementById('showFavorites')
   let showFavoritesUl = document.getElementById('showFavoritesUl')
   div.style.display = 'block'
@@ -257,22 +255,22 @@ function showFavorites(event) {
   let li = document.createElement('li')
   let h2 = document.createElement('h2')
   h2.textContent = event.name
-  // h2.addEventListener('click', () => {
-  //   showMore(event)
-  //   toggleVisibility("showFavorites")
-  // })
-  // let moreInfo = document.createElement('button')
-  // moreInfo.textContent = "Click Here for More Info"
-  // moreInfo.addEventListener('click', () => {
-  //   showMore(event)
-  //   toggleVisibility("showFavorites")
-  // })
+  h2.addEventListener('click', () => {
+    showMoreFromFavorites(event)
+    // toggleVisibility("showFavorites") //is this right?
+  })
+  let moreInfo = document.createElement('button')
+  moreInfo.textContent = "Click Here for More Info"
+  moreInfo.addEventListener('click', () => {
+    showMoreFromFavorites(event)
+    // toggleVisibility("showFavorites") //is this right?
+  })
 
-  // let likeButton = document.createElement('button')
-  // likeButton.textContent = 'Add to Favorites ❤️'
-  // likeButton.addEventListener('click', () => {
-  //   saveNewFavorite(event)
-  // })
+  let removeButton = document.createElement('button')
+  removeButton.textContent = 'Remove Event' //remove from favorites
+  removeButton.addEventListener('click', () => {
+    removeFavorite(event)
+  })
 
   let cityState = document.createElement('p')
   let date = document.createElement('p')
@@ -289,10 +287,102 @@ function showFavorites(event) {
   li.appendChild(cityState)
   li.appendChild(venue)
   li.appendChild(date)
-  // li.appendChild(moreInfo)
-  // li.appendChild(likeButton)
+  li.appendChild(removeButton)
+  li.appendChild(moreInfo)
   showFavoritesUl.appendChild(li)
   div.appendChild(showFavoritesUl)
+}
+
+function showMoreFromFavorites(event) {
+  console.log('in show more from favorites')
+
+  toggleVisibility("showFavorites")
+
+  let div = document.getElementById('showMoreFromFavoritesResults')
+  let ul = document.getElementById('showMoreFromFavoritesUl')
+  let h2 = document.createElement('h2')
+  let li = document.createElement('li')
+  h2.textContent = event.name
+  let cityState = document.createElement('p')
+  let date = document.createElement('p')
+  let venue = document.createElement('p')
+  let url = document.createElement('a')
+  // let url = document.getElementById('url')
+  let start_date = document.createElement('p')
+  let start_time = document.createElement('p')
+  let segment = document.createElement('p')
+  let genre = document.createElement('p')
+  url.setAttribute('target', '_blank')
+  url.href = event.url
+  url.textContent = `Click Here to Buy Tickets`
+
+  var time = event.start_time; // your input
+
+time = time.split(':'); // convert to array
+
+// fetch
+var hours = Number(time[0]);
+var minutes = Number(time[1]);
+var seconds = Number(time[2]);
+
+// calculate
+var timeValue;
+
+if (hours > 0 && hours <= 12) {
+  timeValue= "" + hours;
+} else if (hours > 12) {
+  timeValue= "" + (hours - 12);
+} else if (hours == 0) {
+  timeValue= "12";
+}
+
+timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+
+timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+
+  start_date.textContent = `Date of Event: ${event.start_date}`
+  start_time.textContent = `Time of Event: ${timeValue}`
+  segment.textContent = `Type of Event: ${event.segment}`
+  genre.textContent = `Genre: ${event.genre}`,
+  cityState.textContent = `Location: ${event.city}, ${event.state}`
+  venue.textContent = `Venue: ${event.venue}`
+  date.textContent = event.start_date
+  let img = document.createElement('img')
+  img.src = event.image1
+  img.style.width = '200px'
+  img.style.height = '125px'
+  let backButton = document.createElement('button')
+  backButton.textContent = "Go Back"
+  backButton.addEventListener('click', () => {
+    // toggleVisibility('search')
+    toggleVisibility('showFavorites')
+    while (ul.hasChildNodes()) {
+      ul.removeChild(ul.firstChild)
+    }
+  })
+
+
+
+  let removeButton = document.createElement('button')
+  removeButton.textContent = 'Remove Event' //remove from favorites
+  removeButton.addEventListener('click', () => {
+    removeFavorite(event)
+  })
+  li.appendChild(h2)
+  li.appendChild(url)
+  li.appendChild(cityState)
+  li.appendChild(venue)
+  // li.appendChild(date)
+  li.appendChild(img)
+  li.appendChild(start_date)
+  li.appendChild(start_time)
+  li.appendChild(segment)
+  li.appendChild(genre)
+  li.appendChild(removeButton)
+  li.appendChild(backButton)
+  ul.appendChild(li)
+  div.appendChild(ul)
+
 }
 
 function saveNewFavorite(event) {
@@ -318,6 +408,30 @@ function saveNewFavorite(event) {
   })
 }
 
+function removeFavorite(event) {
+  console.log('in removeFavorite')
+  let data = {
+    'user_id': localStorage.getItem('userId'),
+    'name': event.name,
+    'url': event.url,
+    'image1': event.image1,
+    'image2': event.image2,
+    'start_date': event.start_date,
+    'start_time': event.start_time,
+    'segment': event.segment,
+    'genre': event.genre,
+    'venue': event.venue,
+    'city': event.city,
+    'state': event.state
+  }
+
+  fetch(endPoint + `/${event.id}`, {
+    method: 'DELETE',
+    headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+    body: JSON.stringify(data)
+  })
+}
+
 function toggleVisibility(id) {
   let e = document.getElementById(id)
   if (e.style.display == 'block') {
@@ -326,7 +440,3 @@ function toggleVisibility(id) {
     e.style.display = "block"
   }
 }
-
-// function clearCurrent(ul) {
-//   ul.removeChild(ul.firstChild)
-// }

@@ -6,15 +6,52 @@
   display: block;
 }
 
-/* body {
- background-image: url("https://png.pngtree.com/thumb_back/fw800/back_pic/03/73/20/0557b9c92034b39.jpg");
- background-color: #cccccc;
-} */
+.card {
+  text-align: center;
+  border: grey solid 3px;
+  padding: 1rem;
+  width: 20rem;
+  height: 30rem;
+  display: inline-grid;
+  margin: 1rem 2rem;
+  box-shadow: 3px 4px #e04b52
+}
 
-html {
+.cardImage {
+  display:block;
+  margin:auto;
+}
+
+.jumbotron {
+  background: url(https://pbs.twimg.com/media/C1yMHStWEAEZnSB.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.display-4 {
+  color: white;
+  font-size: 70px;
+}
+
+.lead {
+  color: white;
+}
+
+.logintime{
+  font-size: 30px;
+  /* text-align: center; */
+}
+
+#loginForm {
+  /* text-align: center; */
+}
+body {
+ background-color: white;
+}
+
+/* html {
   background: url(https://qello.com/welcome/images/Background_1600.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
+} */
