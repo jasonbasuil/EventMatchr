@@ -1,30 +1,30 @@
 # EventMatchr
-Frontend of EventMatchr
 
-Event Matcher is a web application that allows users to search for different events nearby and make purchases through Ticketmaster.
+DEMO: https://player.vimeo.com/video/336883307
+WEBSITE: https://eventmatcher2019.herokuapp.com/index.html
 
-# Live Website
-https://eventmatcher2019.herokuapp.com/index.html
+*demo credentials (**username:** jason, **email:** jason@email.com)*
 
-Enter a username and email to sign up. No password necessary. 
+Technologies:
+- JavaScript
+- HTML
+- CSS
+- Ruby on Rails
+- Postgresql
+- Ticketmaster Search API
 
-# Deliverables
+## Event Matcher is a web application that allows users to search for different events nearby and make purchases through Ticketmaster.
 
-A user should be able to:
-- Login using their username
-- Be logged out if they refresh the page
-_____
-- Browse for events by City
-- Browse for events by State
-- Browse for events by Keyword
-- Be able to see the top results of their search rendered on the page.
-_____
-- Click on an event to view more info regarding the event
-- Click on an event's image to be redirected to the Ticketmaster page via new tab
-- Click on an event's name to be redirected to the
-_____
-- Favorite an event
-- View their favorited events at a later time
-- See the current number of favorited events in their list
-- Remove an event from their favorited list
+- Login with a username and email
+- Search for events by keyword, city, and state
+- Favorite events
+- View your favorites
+- Delete your favorites
+- Purchase tickets for an event through Ticketmaster
+<br>
+**Search for events in your city**
+<br><br>
+![](https://media.giphy.com/media/3h3uNcKpWFIEJo9qlz/giphy.gif)
+
+
 
