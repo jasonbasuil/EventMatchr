@@ -6,7 +6,7 @@
 
 *demo credentials (**username:** jason, **email:** jason@email.com)*
 
-Technologies:
+**Technologies:**
 - JavaScript
 - HTML
 - CSS
