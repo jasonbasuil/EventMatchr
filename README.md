@@ -1,7 +1,8 @@
 # EventMatchr
 
-DEMO: https://player.vimeo.com/video/336883307
-WEBSITE: https://eventmatcher2019.herokuapp.com/index.html
+**DEMO:** https://player.vimeo.com/video/336883307
+<br>
+**WEBSITE:** https://eventmatcher2019.herokuapp.com/index.html
 
 *demo credentials (**username:** jason, **email:** jason@email.com)*
 
@@ -21,7 +22,7 @@ Technologies:
 - View your favorites
 - Delete your favorites
 - Purchase tickets for an event through Ticketmaster
-<br>
+
 **Search for events in your city**
 <br><br>
 ![](https://media.giphy.com/media/3h3uNcKpWFIEJo9qlz/giphy.webp)
