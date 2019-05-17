@@ -24,7 +24,7 @@ Technologies:
 <br>
 **Search for events in your city**
 <br><br>
-![](https://media.giphy.com/media/3h3uNcKpWFIEJo9qlz/giphy.gif)
+![](https://media.giphy.com/media/3h3uNcKpWFIEJo9qlz/giphy.webp)
 
 
 
